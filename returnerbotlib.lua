@@ -22,7 +22,7 @@ bot.lines = getgenv().Settings.lines or {
 }
 
 -- each teleport location is a table with {name = "...", cframe = CFrame}
--- user can rename them freely
+-- you can rename them freely
 bot.teleportLocations = getgenv().Settings.teleportLocations or {
     { name = "Start", cframe = CFrame.new(0, 0, 0) }
 }
@@ -315,4 +315,7 @@ function bot.run()
 	-- for demonstration, we won't start anything by default
 end
 
+function bot.test()
+	print("test")
+end
 return bot
