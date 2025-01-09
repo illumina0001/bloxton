@@ -93,6 +93,28 @@ function bot.findLocation(name)
 	return nil
 end
 
+function bot.getRandomItem(listOfLines, lastLine)
+    -- if there's nothing in the list, just return empty string or nil
+    if #listOfLines == 0 then
+        return ""
+    end
+
+    -- random seed (optional; done once at init is often enough)
+    math.randomseed(os.time())
+
+    local length = #listOfLines
+    local index  = math.random(1, length)
+
+    -- if there is more than one line and we keep hitting the same line, roll again
+    if length > 1 then
+        while listOfLines[index] == lastLine do
+            index = math.random(1, length)
+        end
+    end
+
+    return listOfLines[index]
+end
+
 -- goTo by name, won't break if user renamed a location
 function bot.goTo(locationName)
 	local cframe = bot.findLocation(locationName)
