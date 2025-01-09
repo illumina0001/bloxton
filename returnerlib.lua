@@ -36,6 +36,7 @@ getgenv().walkSpeed        = getgenv().walkSpeed        or 16
 getgenv().Speed            = getgenv().Speed            or 5
 getgenv().noClip           = getgenv().noClip           or false
 getgenv().chatMode 	   = getgenv().chatMode		or "old"
+getgenv().scriptUrl	   = getgenv().scriptUrl	or nil
 
 -- example storing staff/team data
 bot.cuffRanks      = {7,9,10,11,12,14,15,16}
@@ -71,16 +72,7 @@ function bot.waitGame()
 	end
 end
 
--- remove some barriers
-function bot.removeBarriers()
-	for _, obj in pairs(workspace:GetDescendants()) do
-		if obj:IsA("Part") then
-			if obj.Name:match("Barrier") or obj.Name == "NoSpamToolZone" then
-				obj:Destroy()
-			end
-		end
-	end
-end
+
 
 -- check place
 
@@ -174,9 +166,10 @@ function bot.queueTeleport()
 		if not game:IsLoaded() then
 			game.Loaded:Wait()
 		end
-		-- reload main script if needed
+		loadstring(game:HttpGet("]]..getgenv().scriptUrl...[["))()
 	]])
 end
+
 
 bot.rejoinFlag = false
 function bot.checkKicked()
@@ -325,7 +318,6 @@ end
 -- init
 function bot.init()
 	bot.waitGame()
-	bot.removeBarriers()
 	bot.toStart()
 	bot.sitMonitor()
 	bot.noClipAll()
