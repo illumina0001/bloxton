@@ -35,6 +35,7 @@ getgenv().smallMode        = getgenv().smallMode        or false
 getgenv().walkSpeed        = getgenv().walkSpeed        or 16
 getgenv().Speed            = getgenv().Speed            or 5
 getgenv().noClip           = getgenv().noClip           or false
+getgenv().chatMode 	   = getgenv().chatMode		or "old"
 
 -- example storing staff/team data
 bot.cuffRanks      = {7,9,10,11,12,14,15,16}
@@ -155,8 +156,16 @@ end
 bot.lastChatItem = nil
 function bot.sayLine(linesTable)
 	local line = bot.getRandomItem(linesTable, bot.lastChatItem)
-	replicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(line, "All")
+	bot.say(line, "All")
 	bot.lastChatItem = line
+end
+
+function bot.say(msg)
+	if getgenv().chatMode == "old" then
+		replicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg, "All")
+	else
+		game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync(msg)
+	end
 end
 
 -- simple rejoin logic
