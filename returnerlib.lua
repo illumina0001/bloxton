@@ -148,7 +148,7 @@ end
 bot.lastChatItem = nil
 function bot.sayLine(linesTable)
 	local line = bot.getRandomItem(linesTable, bot.lastChatItem)
-	bot.say(line, "All")
+	bot.say(line)
 	bot.lastChatItem = line
 end
 
