@@ -141,7 +141,7 @@ function bot.toStart()
     print("Moved to start position:", cframe.Position)
 end
 
--- pathfinding walk
+-- pathfinding walk a
 function bot.walkTo(posVector)
     local agentParams = {
         AgentCanJump = true,
