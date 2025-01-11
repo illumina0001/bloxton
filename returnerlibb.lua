@@ -111,16 +111,7 @@ function bot.walkTo(posVector)
     end
     print("Reached position:", posVector)
 end
--- remove some barriers
-function bot.removeBarriers()
-    for _, obj in pairs(workspace:GetDescendants()) do
-        if obj:IsA("Part") then
-            if obj.Name:match("Barrier") or obj.Name == "NoSpamToolZone" then
-                obj:Destroy()
-            end
-        end
-    end
-end
+
 
 -- finds a cframe by the user-defined name (returns nil if not found)
 function bot.findLocation(name)
@@ -392,9 +383,9 @@ function bot.setupAnimations()
     end
 end
 
--- init
 function bot.init()
     print("Bot initialization started.")
+    math.randomseed(os.time()) -- Seed the RNG
     bot.waitGame()
     bot.toStart()
     bot.sitMonitor()
