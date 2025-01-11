@@ -143,7 +143,6 @@ end
 
 -- pathfinding walk
 function bot.walkTo(posVector)
-    print("Walking to position:", posVector)
     local agentParams = {
         AgentCanJump = true,
         Costs = { seat = math.huge }
@@ -152,32 +151,26 @@ function bot.walkTo(posVector)
     local startPos = humanoidRootPart.Position - Vector3.new(0, humanoidRootPart.Size.Y / 0.75, 0)
     path:ComputeAsync(startPos, posVector)
     
-    print("Path Status:", path.Status)
     if path.Status ~= Enum.PathStatus.Success then
-        warn("Pathfinding failed with status:", path.Status)
+        warn("pathfinding failed with status:", path.Status)
         return
     end
     
     local waypoints = path:GetWaypoints()
-    print("Number of waypoints:", #waypoints)
     
     for index, waypoint in ipairs(waypoints) do
-        print("Waypoint "..index..": Position:", waypoint.Position, "Action:", waypoint.Action)
         if waypoint.Action == Enum.PathWaypointAction.Jump then
             humanoid.Jump = true
-            print("Humanoid jumping at waypoint "..index)
         end
         humanoid:MoveTo(waypoint.Position)
         local success, errorMessage = pcall(function()
             humanoid.MoveToFinished:Wait()
         end)
         if not success then
-            warn("Error during MoveToFinished: ", errorMessage)
+            warn("error during MoveToFinished: ", errorMessage)
         else
-            print("Reached waypoint "..index)
         end
     end
-    print("Reached position:", posVector)
 end
 
 -- say line from a single big table
